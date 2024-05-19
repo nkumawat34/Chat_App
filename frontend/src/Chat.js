@@ -19,6 +19,7 @@ export default function Chat(props) {
 
       
       socket.emit("message",{message,room})
+      SetMessage("")
 
     }
     const JoinSomeRoom=()=>{
@@ -56,7 +57,7 @@ export default function Chat(props) {
       return () => {
         newSocket.disconnect();
       };
-    }, [location.search, name]);
+    }, [location.search, name,messages]);
   return (
     
     <div style={{marginTop:"30vh",marginLeft:"30vw"}}>
@@ -70,16 +71,18 @@ export default function Chat(props) {
     <hr/>
     Room <input style={{marginLeft:"15vw"}} onChange={(e)=>setRoom(e.target.value)}></input>
     <button type="submit" class="btn btn-primary" onClick={()=>handleSubmit()} style={{marginLeft:"2vw"}}>Send</button>
-    
-    {
-      messages.length!=0?messages.map((message)=>{
-        <>
-          {message}
-        </>
-      }):""
-
-
-    }
+    {messages.length}
+    <div>
+      {messages.length !== 0 ? (
+        messages.map((message, index) => (
+          <div key={index}>
+            {message}
+          </div>
+        ))
+      ) : (
+        ""
+      )}
+    </div>
     </div>
   )
 }
