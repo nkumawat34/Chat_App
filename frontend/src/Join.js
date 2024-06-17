@@ -17,16 +17,20 @@ export default function Join() {
         password:password
       })
       .then((response) => {
-        navigate("/chat")
+       
+        const token = response.data.data.token;
+      localStorage.setItem('token'+email, token); // Store the token
+        navigate("/chat",{state:{email:email}})
       }, (error) => {
         console.log(error);
       });
+      
     }
   return (
-    <div style={{marginTop:"20%"}}>
+    <div style={{marginTop:"15%"}}>
         <div className='text-center '>Join</div>
         <div className='text-center'>
-       <div>Email <input onChange={(event)=>setEmail(event.target.value)}></input>
+       <div>Email <input onChange={(event)=>setEmail(event.target.value)} className='ms-3'></input>
        </div> 
        <div style={{marginTop:"2vh"}}>Password<input className='mx-1' onChange={(event)=>setPassword(event.target.value)}></input>
         </div>
